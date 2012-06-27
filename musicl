@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+if __name__ == '__main__':
+	import scripts.musicl_main
+	scripts.musicl_main.main()

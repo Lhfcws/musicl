@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*- 
+import musicweb
+import urllib
+from mybash import bash
+
+def getMusicFormat(downlink):
+	if downlink.find('mp3'):
+		return 'mp3'
+	elif downlink.find('wma'):
+		return 'wma'
+	elif downlink.find('acc'):
+		return 'acc'
+	elif downlink.find('rm'):
+		return 'rm'
+
+def main():
+	print "success!\n"
+	localAddr = 'musics/'
+	lines = bash()
+	if lines in [True,False]:
+		return
+	for line in lines:
+		name = line
+		name = (name.lower()).replace('\'', ' ').replace('_',' ')
+		print name
+		#temp: author = getSinger(line)
+		keyword = name.strip()
+		if keyword != 'n-exist':
+			downlink = musicweb.linkMusic(keyword)
+		else:
+			downlink = 'n-exist'
+		if downlink != 'n-exist':
+			musicf = getMusicFormat(downlink)
+			print keyword + ' Downloading..  Please wait...'
+			urllib.urlretrieve(downlink, localAddr + name + '.' + musicf)
+			print keyword + ' download completed.\n\n'
+		else:
+			print 'Cannot find your requested music yet~~\nPlease wait for more sources added\nOr you can firstly check whether your file content is valid.'
+

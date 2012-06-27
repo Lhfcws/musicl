@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+#Abstract failed! 
+#ignore this file
+from urllib import urlopen
+
+class MusicWeb:
+	def __init__(self, basic_addr, level):
+		self.basicLink = basic_addr
+		self.level = level
+		self.searchkey = []
+		__clear()
+	
+	def __clear():
+		self.candidate = []
+'''
+	def attachKey(lv, keyitems):
+		self.searchkey[lv] = keyitems
+'''	
+	def getCandidate():
+		return candidate
+
+	def addCandidate(self, addr):
+		self.candidate.append(addr)
+	
+	def stripKeyword(keyword):
+		key = ''.join(keyword)
+		if key.find('\''):
+			key.replace('\'','')
+		#add reg_posix	
+		return key
+
+	def addKey(keyword):
+		return self.basicLink + keyword
+
+	def getLink(webline, key, mode):
+		index = webline.find(key) + len(key) - 1
+		ans = []
+		addr = ''
+		while index < len(webline):
+			index += 1
+			if webline[index] in mode[2]:
+				if mode[1] == '+':
+					addr = eval(addr)
+				if mode[3] != 'full':
+					addr = mode[3] + addr
+				ans.append(addr)
+				if mode[0] == 'single':
+					return ans
+			addr += webline[index]
+		return ans
+
+	def linkMusic(lv, addr):
+		if lv == 0:
+			__clear()
+			print 'Linking to \n# ' + addr
+
+		weblines = urlopen(addr).readlines()
+		for webline in weblines:
+			webline = ''.join(webline)
+			for key in searchkey[lv]:
+				if webline.find(key[0]) > -1:
+					if key[1][0] == 'n-exist':
+						return key[1][0]
+					addr1 = getLink(webline, key[2], key[1])
+					if lv == level:
+						self.candidate += addr1
+					else:
+						for x in addr1:
+							linkMusic(lv+1, x)
+					break
+			pass
+		

@@ -1,0 +1,33 @@
+#!/usr/bin/env python
+
+import webclass
+
+'''
+searchkey = [nowitem, mode, nextitem]
+'''
+
+class BaiduMp3(WebClass):
+	def __init__(self):
+		super(self).__init__('http://mp3.baidu.com/m?word=', 1)
+
+	def getErrorMode():
+		return ['n-exist', '', '', 'full']
+
+	def getMode1():
+		return ['single', '', '\"', self.basicLink]
+
+	def getMode2():
+		return ['single', '+', ',)', 'full']
+
+	def attachKey():
+		mod = ['single', '', '\"', 'full']
+		null = ['']
+		#temp: nw = ['div class=\"f12 gray9\"', 'id=\"downlink\"', 'var encurl = urlM(']
+		temp1 = [['onclick=\"return song_download(event,this,1);\"'], mod, ['href=\"']]
+		temp2 = [['div class=\"area-error-message\"'], getErrorMode(), null]
+		self.searchkey.append([temp2, temp1])
+
+		temp0 = [['div class=\"f12 gray9\"'], getErrorMode(), null]
+		temp1 = [['id=\"downlink\"'], getMode1(), ['href=\"']]
+		temp2 = [['var encurl = urlM('], getMode2(), ['var encurl = urlM(']]
+		self.searchkey.append([temp0, temp1, temp2])
